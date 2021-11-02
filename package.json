@@ -5,15 +5,47 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "format": "prettier --write '**/*.{ts,tsx,js,css,scss,json}'",
+    "test": "jest"
   },
   "dependencies": {
+    "firebase": "^9.2.0",
     "next": "12.0.2",
+    "next-pwa": "^5.4.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "react-firebase-hooks": "^4.0.0",
+    "react-firebaseui": "^5.0.2",
+    "react-qr-code": "^2.0.2"
+  },
+  "eslintConfig": {
+    "extends": [
+      "prettier",
+      "next/core-web-vitals"
+    ]
   },
   "devDependencies": {
-    "eslint": "7.32.0",
-    "eslint-config-next": "12.0.2"
+    "@types/node": "^16.11.6",
+    "@types/react": "^17.0.33",
+    "eslint": "^7.32.0",
+    "eslint-config-next": "^12.0.1",
+    "typescript": "^4.4.4",
+    "@testing-library/jest-dom": "^5.12.0",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/react-hooks": "^5.1.2",
+    "@testing-library/user-event": "^13.1.9",
+    "@types/jest": "^26.0.23",
+    "@types/styled-components": "^5.1.9",
+    "autoprefixer": "^10.4.0",
+    "babel-jest": "^26.6.3",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^26.6.3",
+    "postcss": "^8.3.11",
+    "prettier": "^2.3.0",
+    "react-test-renderer": "^17.0.2",
+    "tailwindcss": "^2.2.19",
+    "ts-jest": "^26.5.6"
   }
 }
