@@ -2,7 +2,7 @@ import QRCode from "react-qr-code";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { auth, signInConfig } from "../firebase/client";
 
-const toURL = (session: string) => {
+export const toURL = (session: string) => {
   const { hostname, protocol } = window.location;
   return `${protocol}//${hostname}/auth/${session}`;
 };
@@ -12,9 +12,15 @@ type AuthProps = {
 };
 
 const Auth = ({ session }: AuthProps) => (
-  <div className="flex flex-col justify-center content-center justify-items-center">
-    <QRCode value={toURL(session)} />
-    <StyledFirebaseAuth uiConfig={signInConfig} firebaseAuth={auth} />
+  <div className="flex flex-col justify-around items-center">
+    <h1 className="mt-5 font-mono">Please scan to give access :P</h1>
+    <QRCode value={toURL(session)} className="mt-5" />
+    <h1 className="mt-5 font-mono">Or login :)</h1>
+    <StyledFirebaseAuth
+      uiConfig={signInConfig}
+      firebaseAuth={auth}
+      className="mt-5"
+    />
   </div>
 );
 
