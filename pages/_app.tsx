@@ -4,23 +4,19 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
-import { analytics } from "../firebase/client";
+import { analytics, logScreenView } from "../firebase/client";
 import { Provider } from "../components/context/AppContext";
 
 const App = ({ Component, pageProps }: AppProps) => {
   const routers = useRouter();
   useEffect(() => {
     if (!analytics) {
-      const logEvent = (url) => {
-        analytics().setCurrentScreen(url);
-        analytics().logEvent("screen_view");
-      };
-      routers.events.on("routeChangeComplete", logEvent);
+      routers.events.on("routeChangeComplete", logScreenView);
       //For First Page
-      logEvent(window.location.pathname);
+      logScreenView(window.location.pathname);
       //Remvove Event Listener after un-mount
       return () => {
-        routers.events.off("routeChangeComplete", logEvent);
+        routers.events.off("routeChangeComplete", logScreenView);
       };
     }
   }, []);

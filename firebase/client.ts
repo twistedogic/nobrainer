@@ -1,9 +1,18 @@
-import firebase from "firebase/compat/app";
-import { isSupported, getAnalytics } from "firebase/analytics";
-import { GoogleAuthProvider } from "firebase/auth";
-import "firebase/compat/auth";
-import "firebase/compat/storage";
-import "firebase/compat/firestore";
+import { initializeApp } from "firebase/app";
+import {
+  isSupported,
+  getAnalytics,
+  logEvent,
+  setCurrentScreen,
+} from "firebase/analytics";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInAnonymously,
+  signOut,
+} from "firebase/auth";
+import { getStorage } from "firebase/storage";
+import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -15,15 +24,22 @@ const firebaseConfig = {
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
-const app = firebase.initializeApp(firebaseConfig);
-const auth = app.auth();
-const storage = app.storage();
-const firestore = app.firestore();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const storage = getStorage(app);
+const firestore = getFirestore(app);
 const analytics = isSupported() ? getAnalytics(app) : null;
 const googleId = GoogleAuthProvider.PROVIDER_ID;
 const signInConfig = {
-  signInSuccessUrl: "/",
+  signInSuccessUrl: "/login",
   signInOptions: [googleId],
 };
 
 export { app, auth, analytics, firestore, signInConfig };
+
+export const defaultLogin = () => signInAnonymously(auth);
+export const logout = () => signOut(auth);
+export const logScreenView = (url: string) => {
+  setCurrentScreen(analytics, url);
+  logEvent(analytics, "screen_view");
+};
